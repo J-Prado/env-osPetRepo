@@ -6,11 +6,20 @@ module.exports = (sequelize) => {
   sequelize.define(
     "refuges",
     {
+      id: {
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      gender: {
+      numberRegistration: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      number: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },

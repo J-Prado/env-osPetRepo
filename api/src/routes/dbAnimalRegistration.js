@@ -40,4 +40,35 @@ router.post("/animaldbregistration", async (req, res) => {
   }
 });
 
+router.post("/regugeregistration", async (req, res) => {
+  console.log("Where? -->>", req.url);
+  try {
+    const { name, numberRegistration, number } = req.body;
+
+    const [refugeCreated, created] = await db.Animals.findOrCreate({
+      where: { numberRegistration: numberRegistration },
+      defaults: {
+        name,
+        number,
+        numberRegistration,
+      },
+    });
+
+    let mensaje = {};
+
+    if (created) {
+      mensaje = { refugeCreated: refugeCreated.id, message: "Refuge Created" };
+
+      const { id, name } = refugeCreated;
+      res.status(201).json(mensaje);
+    } else {
+      mensaje = { message: "Refuge exists" };
+      res.status(422).json(mensaje);
+    }
+  } catch (e) {
+    console.log("I am here", e);
+    res.send(e);
+  }
+});
+
 module.exports = router;
