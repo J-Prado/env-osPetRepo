@@ -58,7 +58,28 @@ router.get("/race/", async (req, res) => {
     });
 
     if (pets.length > 0) {
-      res.status(201).json(pets);
+      if (pets.length > 5) {
+        const { race2 } = req.body;
+        const pet = await db.Animals.findAll({
+          where: { race: `${race2}` },
+          attributes: [
+            "id",
+            "name",
+            "gender",
+            "status",
+            "race",
+            "animalType",
+            "size",
+            "age",
+            "photo",
+            "owner",
+            "description",
+          ],
+        });
+        res.status(201).json(pet);
+      } else {
+        res.status(201).json(pets);
+      }
     } else {
       res.status(422).json("Not found");
     }
