@@ -11,17 +11,25 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
 
     if (id) {
-      await db.Animals.update(
-        {
-          status: false,
-        },
-        {
-          where: {
-            id,
-          },
-        }
-      );
-      return res.status(200).send("Status Changed");
+      const search = await Animals.findOne({
+        where: { id },
+      });
+
+      let searchId = {
+        id: search.id,
+        name: search.name,
+        description: search.description,
+        photo: search.photo,
+        age: search.age,
+        color: search.color,
+        race: search.race,
+        animalType: search.animalType,
+        race: search.race,
+        gender: search.gender,
+        size: search.size,
+        status: search.status,
+      };
+      return res.status(200).send(searchId);
     } else {
       return res.status(400).json({
         error: "ID is required",

@@ -108,7 +108,7 @@ router.put("/changestatus/:id", async (req, res) => {
     if (id) {
       await db.Animals.update(
         {
-          status: false,
+          status: true,
         },
         {
           where: {
